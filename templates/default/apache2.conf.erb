@@ -6,7 +6,7 @@
 ServerRoot "<%= node['apache']['dir'] %>"
 
 #
-# The accept serialization lock file MUST BE STORED ON A LOCAL DISK.
+# Lockfiles may be replaced by faster semaphore mutex
 #
 Mutex sem
 
@@ -139,6 +139,9 @@ LogLevel warn
 # Include module configuration:
 Include <%= node['apache']['dir'] %>/mods-enabled/*.load
 Include <%= node['apache']['dir'] %>/mods-enabled/*.conf
+
+# Amazon php55 packages use this dir
+Include <%= node['apache']['dir'] %>/conf.modules.d/*.conf
 
 <% if %w[freebsd].include?(node['platform_family']) -%>
 <IfDefine NOHTTPACCEPT>
